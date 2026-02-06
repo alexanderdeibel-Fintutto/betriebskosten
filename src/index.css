@@ -4,6 +4,8 @@
 
 /* Fintutto Nebenkosten Design System */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
 
 @layer base {
   :root {
@@ -11,7 +13,7 @@
     --foreground: 270 20% 95%;
 
     --card: 270 30% 16%;
-    --card-foreground: 270 20% 95%;
+    --card-foreground: 210 40% 98.0392%;
 
     --popover: 270 30% 16%;
     --popover-foreground: 270 20% 95%;
@@ -138,7 +140,7 @@
   .gradient-primary {
     background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
   }
-  
+
   .text-balance {
     text-wrap: balance;
   }
