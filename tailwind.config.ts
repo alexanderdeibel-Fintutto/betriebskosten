@@ -25,7 +25,6 @@ export default {
   				'Noto Color Emoji'
   			],
   			mono: [
-  				'JetBrains Mono',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',
