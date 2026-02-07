@@ -1,4 +1,5 @@
-import { Building2, Users, FileText, Settings, Home, LogOut, Receipt, Menu } from 'lucide-react';
+import { Building2, Users, FileText, Settings, Home, LogOut, Receipt } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { NavLink } from '@/components/NavLink';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -123,6 +124,9 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border">
         <SidebarMenu>
+          <SidebarMenuItem>
+            <ThemeToggle />
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton 
               onClick={signOut}
