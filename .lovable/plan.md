@@ -1,169 +1,67 @@
 
-# Fintutto Nebenkosten - Nebenkostenabrechnungs-App
 
-## Übersicht
-Eine vollständige Webanwendung für Nebenkostenabrechnungen nach deutschem Recht (BetrKV) mit 8-Schritt Wizard, Stammdatenverwaltung und PDF-Generierung.
+## Logo-Integration: Betriebskosten-SVG ueberall einsetzen
 
----
+Das hochgeladene SVG-Logo (bunter Ring mit Rechnungssymbol auf dunklem Farbverlauf) wird als offizielles App-Logo an allen relevanten Stellen eingesetzt.
 
-## Design System
+### Betroffene Stellen
 
-### Farben
-- **Primär**: #F97316 (Orange) - Hauptaktionen, Buttons
-- **Akzent**: #4F46E5 (Indigo) - Sekundäre Elemente, Links
-- **Erfolg**: #10B981 (Grün) - Guthaben-Anzeige
-- **Gefahr**: #EF4444 (Rot) - Nachzahlung-Anzeige
-
-### Layout
-- Responsives Design mit Sidebar-Navigation
-- Wizard mit visueller Fortschrittsanzeige (Stepper)
-- Cards mit abgerundeten Ecken und Schatten
-- Deutsche Sprache durchgehend (formelle Anrede "Sie")
+| Stelle | Aktuell | Neu |
+|---|---|---|
+| **Sidebar-Header** | Lila Quadrat mit "F" | SVG-Logo (32x32px) |
+| **Login-Seite** | Lila Quadrat mit "F" | SVG-Logo (48x48px) |
+| **Registrierungs-Seite** | Lila Quadrat mit "F" | SVG-Logo (48x48px) |
+| **Passwort-vergessen-Seite** | Lila Quadrat mit "F" | SVG-Logo (48x48px) |
+| **Browser-Tab (Favicon)** | Standard-Favicon | SVG als Favicon |
+| **index.html Titel + Meta** | "Lovable App" | "Fintutto Nebenkosten" |
 
 ---
 
-## Authentifizierung
-- Login/Registrierung mit E-Mail und Passwort
-- Passwort-Zurücksetzen Funktion
-- Geschützter Zugriff auf alle Abrechnungsdaten
-- Benutzer-Profile für Kontaktdaten
+### Technische Umsetzung
 
----
+#### 1. Logo-Datei kopieren
 
-## Stammdaten-Verwaltung
+Das SVG wird von `user-uploads://betriebskosten.svg` an zwei Orte kopiert:
+- `src/assets/logo.svg` -- fuer den Import in React-Komponenten (optimiert durch Vite-Bundling)
+- `public/favicon.svg` -- fuer das Browser-Tab-Icon (muss im public-Ordner liegen)
 
-### Gebäude-Verwaltung
-- Liste aller Gebäude mit Adresse und Einheiten
-- Anlegen, Bearbeiten, Löschen von Gebäuden
-- Zuordnung von Wohneinheiten mit Fläche und Merkmalen
+#### 2. Auth-Seiten aktualisieren (3 Dateien)
 
-### Mieter-Verwaltung
-- Mieterstammdaten (Name, Kontakt, Bankverbindung)
-- Übersicht aller Mieter pro Gebäude
+In `LoginPage.tsx`, `RegisterPage.tsx` und `ForgotPasswordPage.tsx` wird das bisherige Platzhalter-Element:
 
-### Mietvertrag-Verwaltung
-- Zuordnung Mieter → Wohneinheit
-- Vertragszeitraum (Von-Bis)
-- Monatliche Vorauszahlungen für Nebenkosten
-- Personen im Haushalt (für Personenschlüssel)
+```text
+<div class="... rounded-lg bg-primary ...">F</div>
+```
 
----
+ersetzt durch:
 
-## 8-Schritt Nebenkostenabrechnung Wizard
+```text
+<img src={logo} alt="Fintutto Logo" class="h-12 w-12 rounded-lg" />
+```
 
-### Schritt 1: Objekt & Zeitraum
-- Auswahl des Gebäudes (Dropdown)
-- Abrechnungszeitraum festlegen (Datum Von-Bis)
-- Validierung: Maximal 12 Monate
+Das Logo wird per ES6-Import eingebunden (`import logo from "@/assets/logo.svg"`).
 
-### Schritt 2: Mietverträge auswählen
-- Tabelle aller relevanten Mietverträge im Zeitraum
-- Checkboxen zur Auswahl
-- Bei Mieterwechsel: Anteilige Zeiträume berechnen
-- Anzeige der Bewohnungsdauer
+#### 3. Sidebar-Header aktualisieren
 
-### Schritt 3: Betriebskosten erfassen
-- Accordion mit allen 17 BetrKV-Kategorien:
-  1. Laufende öffentliche Lasten
-  2. Wasserversorgung
-  3. Entwässerung
-  4. Heizung (zentral)
-  5. Warmwasser (zentral)
-  6. Aufzug
-  7. Straßenreinigung und Müllabfuhr
-  8. Gebäudereinigung
-  9. Gartenpflege
-  10. Beleuchtung
-  11. Schornsteinreinigung
-  12. Versicherungen
-  13. Hauswart
-  14. Gemeinschafts-Antennenanlage/Kabel
-  15. Wascheinrichtungen
-  16. Sonstige Betriebskosten
-  17. (Reserve)
+In `AppSidebar.tsx` wird das "F"-Quadrat im Header durch das Logo-Bild ersetzt (32x32px mit abgerundeten Ecken). Der Text "Fintutto / Nebenkosten" bleibt daneben bestehen.
 
-- Pro Kategorie:
-  - Gesamtbetrag eingeben
-  - Umlageschlüssel wählen (Fläche, Personen, Einheiten, Verbrauch, Direkt)
-  - Optional: Belege hochladen
+#### 4. Favicon und Meta-Tags
 
-### Schritt 4: Direktkosten zuordnen
-- Mieter-spezifische Einzelkosten
-- Direkte Zuordnung zu bestimmten Mietern
-- Beispiele: Schlüsseldienst, individuelle Reparaturen
+In `index.html`:
+- Favicon-Link auf `/favicon.svg` setzen
+- Titel aendern: "Lovable App" -> "Fintutto Nebenkosten"
+- OG-Title und Description aktualisieren
+- Bestehende Lovable-Branding-Metadaten durch App-eigene ersetzen
 
-### Schritt 5: Heizkostenabrechnung
-- Gesamte Heizkosten eingeben
-- Aufteilungsschlüssel wählen:
-  - 30% Fläche / 70% Verbrauch (Standard)
-  - 50% / 50%
-  - 40% / 60%
-- Zählerstände pro Einheit erfassen
-- Grundkosten vs. Verbrauchskosten Berechnung
+#### 5. Dateien-Uebersicht
 
-### Schritt 6: Ergebnisse prüfen
-- Übersichtstabelle pro Mieter:
-  - Name und Wohneinheit
-  - Geleistete Vorauszahlungen
-  - Berechneter Kostenanteil
-  - Saldo (Guthaben/Nachzahlung)
-- Farbliche Hervorhebung:
-  - Grün = Guthaben (Rückzahlung an Mieter)
-  - Rot = Nachzahlung (Mieter schuldet)
-- Detailansicht pro Mieter möglich
+| Datei | Aktion |
+|---|---|
+| `src/assets/logo.svg` | Neu (Kopie) |
+| `public/favicon.svg` | Neu (Kopie) |
+| `src/pages/auth/LoginPage.tsx` | Logo-Import + Bild statt "F"-Box |
+| `src/pages/auth/RegisterPage.tsx` | Logo-Import + Bild statt "F"-Box |
+| `src/pages/auth/ForgotPasswordPage.tsx` | Logo-Import + Bild statt "F"-Box |
+| `src/components/layout/AppSidebar.tsx` | Logo-Import + Bild statt "F"-Box |
+| `index.html` | Favicon + Titel + Meta-Tags |
 
-### Schritt 7: Vorschau & Prüfung
-- PDF-Vorschau der fertigen Abrechnung
-- Rechtliche Checkliste:
-  - ✓ Abrechnungszeitraum korrekt
-  - ✓ Alle Kostenarten umlagefähig
-  - ✓ Umlageschlüssel nachvollziehbar
-  - ✓ Vorauszahlungen verrechnet
-- Bearbeitungsmöglichkeit vor Finalisierung
-
-### Schritt 8: Versand
-- Versandoptionen pro Mieter:
-  - E-Mail mit PDF-Anhang
-  - PDF-Download für Postversand
-  - Direkt drucken
-- Versandhistorie speichern
-- Abrechnung als "Versendet" markieren
-
----
-
-## Datenbank-Struktur (Supabase)
-
-### Tabellen
-- **profiles** - Benutzerprofile
-- **user_roles** - Berechtigungen (admin, user)
-- **buildings** - Gebäude mit Adresse
-- **units** - Wohneinheiten pro Gebäude
-- **tenants** - Mieterstammdaten
-- **leases** - Mietverträge
-- **operating_costs** - Hauptabrechnungen
-- **operating_cost_items** - Einzelne Kostenpositionen
-- **operating_cost_results** - Berechnete Ergebnisse pro Mieter
-- **meter_readings** - Zählerstände
-
-### Sicherheit
-- Row-Level Security für alle Tabellen
-- Benutzer sehen nur eigene Daten
-- Admin-Rolle für erweiterte Funktionen
-
----
-
-## PDF-Generierung (Edge Function)
-- Professionelles Abrechnungslayout
-- Firmenkopf mit Logo
-- Detaillierte Kostenaufstellung
-- Rechtlich konforme Darstellung
-- Download als PDF-Datei
-
----
-
-## Hauptansichten
-1. **Dashboard** - Übersicht offener Abrechnungen
-2. **Abrechnungen** - Liste mit Status und Filterung
-3. **Gebäude** - Stammdatenverwaltung
-4. **Mieter** - Stammdatenverwaltung
-5. **Einstellungen** - Profil und Firmendaten
