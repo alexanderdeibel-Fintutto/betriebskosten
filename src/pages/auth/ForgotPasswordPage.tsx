@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, ArrowLeft, Mail } from 'lucide-react';
+import logo from '@/assets/logo.svg';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -64,9 +65,7 @@ export default function ForgotPasswordPage() {
     <main className="min-h-screen flex items-center justify-center px-4">
       <Card className="w-full max-w-md glass-card">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-xl">
-            F
-          </div>
+          <img src={logo} alt="Fintutto Logo" className="mx-auto mb-4 h-12 w-12 rounded-lg" />
           <CardTitle className="text-2xl">Passwort vergessen?</CardTitle>
           <CardDescription>
             Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen.
