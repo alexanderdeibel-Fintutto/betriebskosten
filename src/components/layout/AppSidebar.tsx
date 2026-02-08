@@ -17,6 +17,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
+import logo from '@/assets/logo.svg';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/dashboard', icon: Home },
@@ -42,9 +43,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
         <div className="flex items-center gap-2 px-2 py-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
-            F
-          </div>
+          <img src={logo} alt="Fintutto Logo" className="h-8 w-8 rounded-lg" />
           {!collapsed && (
             <div className="flex flex-col">
               <span className="font-semibold text-sm">Fintutto</span>
