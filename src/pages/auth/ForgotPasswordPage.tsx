@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
 
   if (sent) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-4">
+      <main className="min-h-screen flex items-center justify-center px-4" style={{ backgroundImage: `url('/images/header-gradient.svg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <Card className="w-full max-w-md glass-card">
           <CardHeader className="text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
@@ -62,7 +62,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
+    <main className="min-h-screen flex items-center justify-center px-4" style={{ backgroundImage: `url('/images/header-gradient.svg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <Card className="w-full max-w-md glass-card">
         <CardHeader className="text-center">
           <img src={logo} alt="Fintutto Logo" className="mx-auto mb-4 h-12 w-12 rounded-lg" />

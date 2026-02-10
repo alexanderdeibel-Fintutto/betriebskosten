@@ -43,7 +43,14 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
+    <main
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{
+        backgroundImage: `url('/images/header-gradient.svg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <Card className="w-full max-w-md glass-card">
         <CardHeader className="text-center">
           <img src={logo} alt="Fintutto Logo" className="mx-auto mb-4 h-12 w-12 rounded-lg" />
